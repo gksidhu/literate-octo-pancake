@@ -8,9 +8,9 @@ with open('LICENSE') as f:
     license = f.read()
 
 setup(
-    name='train_predict',
+    name='ML_prod_utils',
     version='0.1.0',
-    description='Template to standardize production references',
+    description='Template to standardize production ML references',
     long_description=readme,
     author='Gurnimrat Sidhu',
     author_email='gurnimratsidhu@gmail.com',
