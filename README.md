@@ -1,13 +1,18 @@
 # literate-octo-pancake
-This template provides a general API interface to deploy machine learning code to production and development environments. The API exposes five functions to perform training, inference, and metrics calculations and save and load models.
+This package templates a general API interface to deploy machine learning code to production and development environments. The API exposes five functions to perform training, inference, and metrics calculations and to save and load models.
 
-The context for development is the problem in which text narratives must be assigned multiple descriptors or codes: muli-class, multi-label text classification.
+### Context
+The context for package development is the problem in which text narratives must be assigned multiple descriptors or codes: muli-class, multi-label text classification.
 
-**The following are example uses of each method in this package.**
+### Testing
+It is expected that the pytest library provides sufficient routines to test the exposed functions. Pytest documentation can be found [here](https://docs.pytest.org/en/6.2.x/getting-started.html). The unittest library is an alternative option.
+
+### Examples
+The following are example uses of each method in this package.
 
 1. Train model
 ```
-def train(data: pd.DataFrame, data_side: pd.DataFrame, target: list) -> Model:
+def train(data: pd.DataFrame, data_side: pd.DataFrame, target: list, model: Model) -> Model:
     """
     This function trains a model instance on labeled data and returns the trained model.
     
@@ -16,6 +21,7 @@ def train(data: pd.DataFrame, data_side: pd.DataFrame, target: list) -> Model:
         data_side: A pandas DataFrame containing any side information that cannot be naturally joined to the data object. For 
             example, these might be descriptors of target labels.
         target: A list of labels, associated with each observation in the data object.
+        model: A Model instance or object ready for training.
     
     Returns:
         model: A trained Model object.
@@ -25,29 +31,7 @@ def train(data: pd.DataFrame, data_side: pd.DataFrame, target: list) -> Model:
     
 trained_model = train(X_train, y_side_data, y_train)
 ```
-
-2. Evaluate model performance
-```
-def metrics(data: pd.DataFrame, target:list, model: Model) -> Dict:
-    """
-    This function generates classification metrics for model predictions on labeled data. It returns the metrics as a dictionary.
-    
-    Arguments:
-        data: A pandas DataFrame containing feature information.
-        target: A list of labels, associated with each observation in the data object.
-        model: A Model object ready for inference.
-    
-    Returns:
-        metrics: A dictionary of model performance evaluation statistics, such as F1 score, specificity, etc.
-    """
-    y_pred = model.predict(data)
-    metrics = classification_report(target, y_pred)
-    return metrics
-
-metrics_dict = metrics(X_test, y_test, trained_model)
-```
-
-3. Generate predictions
+2. Generate predictions
 ```
 def predict(data: pd.DataFrame, model: Model) -> List:
     """
@@ -64,6 +48,27 @@ def predict(data: pd.DataFrame, model: Model) -> List:
     return predictions
 
 inferences_list = predict(X, trained_model)
+```
+
+3. Evaluate model performance
+```
+def metrics(data: pd.DataFrame, target:list, model: Model) -> Dict:
+    """
+    This function generates classification metrics for model predictions on labeled data. It returns the metrics as a dictionary.
+    
+    Arguments:
+        data: A pandas DataFrame containing feature information.
+        target: A list of labels, associated with each observation in the data object.
+        model: A Model object ready for inference.
+    
+    Returns:
+        metrics: A dictionary of model performance evaluation statistics, such as F1 score, specificity, etc.
+    """
+    y_pred = predict(data, model)
+    metrics = classification_report(target, y_pred)
+    return metrics
+
+metrics_dict = metrics(X_test, y_test, trained_model)
 ```
 
 4. Save model to directory
