@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.metrics import classification_report
 
 
-def train(data: pd.DataFrame, data_side: pd.DataFrame, target: list) -> Model:
+def train(data: pd.DataFrame, data_side: pd.DataFrame, target: list, model: Model) -> Model:
     """
     This function trains a model instance on labeled data and returns the trained model.
     
@@ -13,6 +13,7 @@ def train(data: pd.DataFrame, data_side: pd.DataFrame, target: list) -> Model:
         data_side: A pandas DataFrame containing any side information that cannot be naturally joined to the data object. For 
             example, these might be descriptors of target labels.
         target: A list of labels, associated with each observation in the data object.
+        model: A Model instance or object ready for training.
     
     Returns:
         model: A trained Model object.
@@ -46,7 +47,7 @@ def metrics(data: pd.DataFrame, target:list, model: Model) -> Dict:
     Returns:
         metrics: A dictionary of model performance evaluation statistics, such as F1 score, specificity, etc.
     """
-    y_pred = model.predict(data)
+    y_pred = predict(data, model)
     metrics = classification_report(target, y_pred)
     return metrics
 
