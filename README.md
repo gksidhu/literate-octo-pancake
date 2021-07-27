@@ -6,7 +6,7 @@ The context for development is the problem in which text narratives must be assi
 **The following are example uses of each method in this package.**
 
 1. Train model
-'''
+```
 def train(data: pd.DataFrame, data_side: pd.DataFrame, target: list) -> Model:
     """
     This function trains a model instance on labeled data and returns the trained model.
@@ -24,10 +24,10 @@ def train(data: pd.DataFrame, data_side: pd.DataFrame, target: list) -> Model:
     return model
     
 trained_model = train(X_train, y_side_data, y_train)
-'''
+```
 
 2. Evaluate model performance
-'''
+```
 def metrics(data: pd.DataFrame, target:list, model: Model) -> Dict:
     """
     This function generates classification metrics for model predictions on labeled data. It returns the metrics as a dictionary.
@@ -45,10 +45,10 @@ def metrics(data: pd.DataFrame, target:list, model: Model) -> Dict:
     return metrics
 
 metrics_dict = metrics(X_test, y_test, trained_model)
-'''
+```
 
 3. Generate predictions
-'''
+```
 def predict(data: pd.DataFrame, model: Model) -> List:
     """
     This function accepts unlabeled data and model arguments to generate inferences. It returns a list of predictions.
@@ -64,10 +64,10 @@ def predict(data: pd.DataFrame, model: Model) -> List:
     return predictions
 
 inferences_list = predict(X, trained_model)
-'''
+```
 
 4. Save model to directory
-'''
+```
 def save(model: Model, directory: str):
     """
     This function saves a model object in the specified directory.
@@ -84,10 +84,10 @@ def save(model: Model, directory: str):
 
 filename = time.strftime("%Y%m%d-%H%M%S")
 save(trained_model, f'/models/{filename}')
-'''
+```
 
 5. Load model from directory
-'''
+```
 def load(directory: str) -> Model:
     """
     This function loads a specific model from directory and returns the model.
@@ -102,4 +102,4 @@ def load(directory: str) -> Model:
     return model
     
 loaded_model = load(f'/models/{filename}')
-'''
+```
