@@ -11,7 +11,7 @@ It is expected that the pytest library provides sufficient routines to test the 
 The following are example uses of each method in this package.
 
 1. Train model
-'''
+```
 def train(data: pd.DataFrame, data_side: pd.DataFrame, target: list, model: Model) -> Model:
     """
     This function trains a model instance on labeled data and returns the trained model.
@@ -21,7 +21,7 @@ def train(data: pd.DataFrame, data_side: pd.DataFrame, target: list, model: Mode
         data_side: A pandas DataFrame containing any side information that cannot be naturally joined to the data object. For 
             example, these might be descriptors of target labels.
         target: A list of labels, associated with each observation in the data object.
-        model: Model instance or object to be trained.
+        model: A Model instance or object ready for training.
     
     Returns:
         model: A trained Model object.
@@ -29,9 +29,8 @@ def train(data: pd.DataFrame, data_side: pd.DataFrame, target: list, model: Mode
     model.fit(data, target)
     return model
     
-trained_model = train(X_train, y_side_data, y_train, model)
-'''
-
+trained_model = train(X_train, y_side_data, y_train)
+```
 2. Generate predictions
 ```
 def predict(data: pd.DataFrame, model: Model) -> List:
@@ -52,7 +51,7 @@ inferences_list = predict(X, trained_model)
 ```
 
 3. Evaluate model performance
-'''
+```
 def metrics(data: pd.DataFrame, target:list, model: Model) -> Dict:
     """
     This function generates classification metrics for model predictions on labeled data. It returns the metrics as a dictionary.
@@ -70,17 +69,17 @@ def metrics(data: pd.DataFrame, target:list, model: Model) -> Dict:
     return metrics
 
 metrics_dict = metrics(X_test, y_test, trained_model)
-'''
+```
 
 4. Save model to directory
-'''
+```
 def save(model: Model, directory: str):
     """
     This function saves a model object in the specified directory.
     
     Arguments:
         model: A model object.
-        directory: Desired model filepath, including filename. Note: Beware of overwriting previously saved models.
+        directory: Desired model filepath, including filename and extension. Note: Beware of overwriting previously saved models.
     
     Returns:
         None.
@@ -90,10 +89,10 @@ def save(model: Model, directory: str):
 
 filename = time.strftime("%Y%m%d-%H%M%S")
 save(trained_model, f'/models/{filename}')
-'''
+```
 
 5. Load model from directory
-'''
+```
 def load(directory: str) -> Model:
     """
     This function loads a specific model from directory and returns the model.
@@ -108,4 +107,4 @@ def load(directory: str) -> Model:
     return model
     
 loaded_model = load(f'/models/{filename}')
-'''
+```
