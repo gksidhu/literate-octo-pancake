@@ -1,9 +1,15 @@
+# Multiple test functions may apply to a given method, or vice versa.
+## Do the methods work on ideal data, malformed data, and trivial and complicated models?
+## Do not bundle too many assert statements, as this may complicate debugging.
+## Ideal code coverage for tests is ~80-90%.
+# Pytest looks for functions starting with ```test_```.
+# The command to run pytest is simply ```pytest```, or ```make test``` if including a Makefile in the package.
+
 import pytest
 import pickle
 import numpy as np
 import pandas as pd
 from sklearn.metrics import classification_report
-
 
 
 def test_train(data: pd.DataFrame, data_side: pd.DataFrame, target: str):
@@ -13,11 +19,11 @@ def test_train(data: pd.DataFrame, data_side: pd.DataFrame, target: str):
     Arguments:
     
     
-    Returns:
+    Asserts:
     
     """
     model.fit(data, target)
-    return model
+    assert model
 
 def test_predict(data: pd.DataFrame, model: Model):
     """
@@ -26,11 +32,11 @@ def test_predict(data: pd.DataFrame, model: Model):
     Arguments:
     
     
-    Returns:
+    Asserts:
     
     """
     predictions = model.predict(data)
-    return predictions
+    assert predictions
 
 def test_metrics(data: pd.DataFrame, target: str, model: Model):
     """
@@ -39,12 +45,12 @@ def test_metrics(data: pd.DataFrame, target: str, model: Model):
     Arguments:
     
     
-    Returns:
+    Asserts:
     
     """
     y_pred = model.predict(data)
     metrics = classification_report(target, y_pred)
-    return metrics
+    assert metrics
 
 def test_save(model: Model, directory: str):
     """
@@ -53,11 +59,11 @@ def test_save(model: Model, directory: str):
     Arguments:
     
     
-    Returns:
+    Asserts:
     
     """
     pickle.dump(model, open(directory, 'wb'))
-    return None 
+    assert None 
 
 def test_load(directory: str):
     """
@@ -66,8 +72,8 @@ def test_load(directory: str):
     Arguments:
     
     
-    Returns:
+    Asserts:
     
     """
     model = pickle.load(open(directory, 'rb'))
-    return model
+    assert model
